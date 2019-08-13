@@ -1,0 +1,3 @@
+01-getting-started/.gitignore
+ENV/
+__pycache__/
