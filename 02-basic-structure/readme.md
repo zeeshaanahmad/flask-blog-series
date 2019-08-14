@@ -8,6 +8,7 @@ We will create following structure in our flask-todo application that we started
 
 ```
 flask-app
+.
 ├── __init__.py
 ├── static
 │   ├── css
