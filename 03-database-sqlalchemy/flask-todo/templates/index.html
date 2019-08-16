@@ -1,0 +1,15 @@
+{% extends "skeleton.html" %}
+{% block content %}
+  <div class="jumbo">
+    <h2>Welcome to the Flask To Do App</h2>
+    <h3>Here you can create your To Do lists</h3>
+
+    <ul>
+      {% for todo_item in todo_items %}
+        <li>{{todo_item['title']}}</li>
+      {% endfor %}
+
+    </ul>
+    
+  </div>
+{% endblock %}
