@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from sqlalchemy import create_engine
-from models import Base, TodoItem
+from .models import Base, TodoItem
 
 # Setting up flask application
 app = Flask(__name__)
