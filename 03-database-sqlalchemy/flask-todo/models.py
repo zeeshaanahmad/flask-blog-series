@@ -9,5 +9,5 @@ class TodoItem(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String(), nullable=False)
 
-engine = db.create_engine('sqlite:///todo.db')
+engine = create_engine('sqlite:///todo.db')
 Base.metadata.create_all(engine)
