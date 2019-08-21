@@ -3,18 +3,24 @@
   <head>
     <title>Flask Todo App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- So that the jquery is available before the content block is loaded -->
   </head>
   <body>
+    <script src="{{ url_for('static', filename='js/libs/jquery-3.4.1.min.js') }}" ></script>
     <header>
       <div class="container">
-        <h1 class="logo">Flask Todo App</h1>
+        <a href="/"><h1 class="logo">Flask Todo App</h1></a>
       </div>
     </header> 
+
+    
      
     <div class="container">
       {% block content %}
       {% endblock %}
     </div>
+
+    
      
   </body>
 </html>

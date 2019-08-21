@@ -1,15 +1,88 @@
 {% extends "skeleton.html" %}
 {% block content %}
-  <div class="jumbo">
-    <h2>Welcome to the Flask To Do App</h2>
-    <h3>Here you can create your To Do lists</h3>
-
-    <ul>
-      {% for todo_item in todo_items %}
-        <li>{{todo_item['title']}}</li>
-      {% endfor %}
-
-    </ul>
-    
+<div class="jumbo">
+  <h2>Welcome to the Flask To Do App</h2>
+  <h3>Here you can create your To Do lists</h3>
+  
+  <div class="todomenu">
+    <a href="/todo" class="new"></a>
   </div>
+  
+  <div>
+    <ul class="todolist">
+      {% for todo_item in todo_items %}
+        {% if todo_item['checked'] == True %}
+          <li>
+            <div class="todoitem">
+              <label >
+                <input type="checkbox" checked="checked" data-todoitem='{{todo_item|tojson}}' onclick="updateTodo(event)" class="todotitle"/>{{todo_item['title']}}
+              </label>
+              <a href="#" class="close" onclick="deleteTodo(event)" data-todoitem='{{todo_item|tojson}}'></a>
+            </div>
+          </li>
+        {% else %}
+          <li>
+              <div class="todoitem">
+                <label class="todotitle">
+                  <input type="checkbox" data-todoitem='{{todo_item|tojson}}' onclick="updateTodo(event)" class="todotitle"/>{{todo_item['title']}}
+                </label>
+                <a href="#" class="close" onclick="deleteTodo(event)" data-todoitem='{{todo_item|tojson}}'></a>
+              </div>
+            </li>
+        {% endif %}      
+      {% endfor %}      
+    </ul>
+  </div>    
+</div>
+
+<script>
+  function updateTodo(event) {
+    todoitem = JSON.parse(event.target.dataset["todoitem"])
+    console.log(todoitem)
+    if (todoitem["checked"]) {
+      todoitem["checked"] = false
+    }
+    else {
+      todoitem["checked"] = true
+    }
+    
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://localhost:5000/todo",
+      "method": "PUT",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "processData": false,
+      "data": JSON.stringify(todoitem)
+    }
+    
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+    });
+  }
+
+  function deleteTodo(event) {
+    todoitem = JSON.parse(event.target.dataset["todoitem"])
+    console.log(todoitem)
+    
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": "http://localhost:5000/todo",
+      "method": "DELETE",
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "processData": false,
+      "data": JSON.stringify(todoitem)
+    }
+    
+    $.ajax(settings).done(function (response) {
+      console.log(response);
+      window.location = "/"
+    });
+  }
+</script>
 {% endblock %}
